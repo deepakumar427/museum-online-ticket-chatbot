@@ -8,30 +8,35 @@ export default function ChatWidget() {
     { sender: 'bot', text: 'Welcome to Tixplore! Ask about ticket availability or timings.' }
   ]);
   const [input, setInput] = useState('');
+  const [sessionId, setSessionId] = useState(null); // 👈 add this
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    // 1. Add user message to UI immediately
     const userMsg = { sender: 'user', text: input };
     setMessages((prev) => [...prev, userMsg]);
     setInput('');
 
     try {
-      // 2. Send to your Node.js backend
-      const response = await axios.post('http://localhost:4000/api/v1/chatbot/message', {
-        text: userMsg.text
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+
+      // 👇 you need "const response =" here — this was the actual bug
+      const response = await axios.post(`${API_BASE}/api/v1/chatbot/message`, {
+        text: userMsg.text,
+        sessionId, // 👈 send it back so Dialogflow keeps context
       });
-      
-      // 3. Add bot response to UI
+
       const botMsg = { sender: 'bot', text: response.data.reply || response.data.fulfillmentText };
       setMessages((prev) => [...prev, botMsg]);
+      setSessionId(response.data.sessionId); // 👈 save it for next message
     } catch (error) {
       console.error("Chatbot error:", error);
       setMessages((prev) => [...prev, { sender: 'bot', text: "Sorry, I couldn't reach the server. Please try again." }]);
     }
   };
+
+  // ...rest unchanged
 
   return (
     <div className="fixed bottom-6 right-6 z-[100]">

@@ -29,10 +29,10 @@ database.connect();
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-	cors({
-		origin: "*",
-		credentials: true,
-	})
+  cors({
+    origin: "https://museum-online-ticket-chatbot-phi.vercel.app", // ← replace with your real deployed frontend URL
+    credentials: true,
+  })
 );
 app.use(
 	fileUpload({
