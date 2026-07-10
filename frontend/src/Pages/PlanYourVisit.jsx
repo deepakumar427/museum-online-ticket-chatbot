@@ -32,6 +32,7 @@ function PlanYourVisit() {
                         <MuseumInfoCard
                             title={selectedMuseum ? selectedMuseum.infoTitle : "Did You Get Your Tickets"}
                             text={selectedMuseum ? selectedMuseum.infoText : "Welcome to TIXPLORE! Explore free spaces of the museum, or purchase tickets  and membership for more access..."}
+                            museumTitle={selectedMuseum?.title}
                         />
                     </div>
 

@@ -11,6 +11,69 @@ const User = require("../models/User");
 const Ticket = require("../models/Tickets");
 
 const MEMBERSHIP_AMOUNT = 50000; // ₹500, in paise
+const DEFAULT_TICKET_TYPES = {
+  child: { price: 100, available: 100 },
+  adult: { price: 250, available: 100 },
+  senior: { price: 150, available: 100 },
+};
+
+exports.createTicketOrder = async (req, res) => {
+  try {
+    const { event, tickets } = req.body;
+    if (!event || !tickets || !process.env.RAZORPAY_KEY || !process.env.RAZORPAY_SECRET) {
+      return res.status(400).json({ success: false, message: "Ticket details or Razorpay configuration are missing." });
+    }
+
+    const bookedTickets = {
+      child: Number(tickets.child || 0),
+      adult: Number(tickets.adult || 0),
+      senior: Number(tickets.senior || 0),
+    };
+    if (!Object.values(bookedTickets).every(Number.isInteger) || Object.values(bookedTickets).some((count) => count < 0) || !Object.values(bookedTickets).some(Boolean)) {
+      return res.status(400).json({ success: false, message: "Select at least one valid ticket." });
+    }
+
+    let ticket = await Ticket.findOne({ event });
+    if (!ticket) {
+      ticket = await Ticket.create({ event, date: new Date(), tickets: DEFAULT_TICKET_TYPES });
+    }
+
+    for (const type of Object.keys(bookedTickets)) {
+      if (bookedTickets[type] > ticket.tickets[type].available) {
+        return res.status(400).json({ success: false, message: `Not enough ${type} tickets available.` });
+      }
+    }
+
+    let amount = Object.keys(bookedTickets).reduce(
+      (total, type) => total + bookedTickets[type] * ticket.tickets[type].price,
+      0
+    );
+    const user = await User.findById(req.user.id);
+    if (user?.membership?.isMember) {
+      amount = Math.max(0, amount - (user.membership.discountPoints || 0));
+    }
+    if (amount <= 0) {
+      return res.status(400).json({ success: false, message: "Ticket total must be greater than zero." });
+    }
+
+    const order = await instance.orders.create({
+      amount: amount * 100,
+      currency: "INR",
+      receipt: `ticket_${ticket._id.toString().slice(-18)}`,
+      notes: { ticketId: ticket._id.toString(), userId: req.user.id },
+    });
+    return res.status(200).json({
+      success: true,
+      order,
+      key: process.env.RAZORPAY_KEY,
+      amount: amount * 100,
+      ticketId: ticket._id,
+    });
+  } catch (error) {
+    console.error("Ticket order error:", error);
+    return res.status(500).json({ success: false, message: "Could not create ticket order." });
+  }
+};
 
 exports.createMembershipOrder = async (req, res) => {
   try {

@@ -23,7 +23,7 @@ function ViewMuseumCard({ title, text,icon,iconColor ,optionalchildren,path,butt
                 </p>
 
             </div>
-            {buttonText&&
+            {buttonText && path &&
                  <Link to={path}>
                  <button className='mt-5 bg-black text-white p-3 rounded-sm '> {buttonText}</button>
                 </Link>

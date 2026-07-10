@@ -6,6 +6,7 @@ const {
   sendPaymentSuccessEmail,
   createMembershipOrder,
   verifyMembershipPayment,
+  createTicketOrder,
 } = require("../controllers/payment");
 const { auth } = require("../middleware/auth"); // Only import auth middleware
 
@@ -20,5 +21,6 @@ router.post("/sendPaymentSuccessEmail", auth, sendPaymentSuccessEmail);
 
 router.post("/membership/order", auth, createMembershipOrder);
 router.post("/membership/verify", auth, verifyMembershipPayment);
+router.post("/ticket/order", auth, createTicketOrder);
 
 module.exports = router;

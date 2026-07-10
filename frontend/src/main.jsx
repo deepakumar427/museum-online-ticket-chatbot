@@ -11,6 +11,7 @@ import PlanYourVisit from './Pages/PlanYourVisit.jsx'
 import ViewMuseumDetails from './Pages/ViewMuseumDetails.jsx'
 import MemberShipPage from './Pages/MemberShipPage'
 import FAQPage from './Pages/FAQPage'
+import TicketBooking from './Pages/TicketBooking'
 import { Toaster } from './components/ui/toaster'
 
 const router=createBrowserRouter([
@@ -44,6 +45,9 @@ const router=createBrowserRouter([
       },{
         path:'/FAQ',
         element:<FAQPage/>  //page
+      },{
+        path:'/tickets/:museumTitle',
+        element:<TicketBooking/>
       }
 
     ]

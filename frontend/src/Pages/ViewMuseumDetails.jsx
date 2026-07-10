@@ -38,7 +38,7 @@ function ViewMuseumDetails() {
                             icon={<Ticket className='size-16 ' />}
                             iconColor={"#318CE7"}
                             buttonText={"click to Get Ticket"}
-                            path={''}
+                            path={`/tickets/${encodeURIComponent(museum.title)}`}
                             text={`Welcome to ${museum.title}! Experience museum exclusive offers and purchase tickets for full access to exclusive exhibits.Become a member today for unlimited General Admission ticket discounts, and a variety of exclusive benefits.Visit our 'Membership' section for more details.`} />
 
                         <ViewMuseumCard title={"Opening Hours"}
