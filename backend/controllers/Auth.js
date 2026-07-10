@@ -164,16 +164,19 @@ exports.sendotp = async (req, res) => {
       })
     }
 
-    var otp = otpGenerator.generate(6, {
+    let otp = otpGenerator.generate(6, {
       upperCaseAlphabets: false,
       lowerCaseAlphabets: false,
       specialChars: false,
     })
-    const result = await OTP.findOne({ otp: otp })
-    while (result) {
+    let existingOtp = await OTP.findOne({ otp })
+    while (existingOtp) {
       otp = otpGenerator.generate(6, {
         upperCaseAlphabets: false,
+        lowerCaseAlphabets: false,
+        specialChars: false,
       })
+      existingOtp = await OTP.findOne({ otp })
     }
     const otpPayload = { email, otp }
     const otpBody = await OTP.create(otpPayload)

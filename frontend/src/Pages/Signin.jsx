@@ -5,15 +5,22 @@ import Button from "../components/Button";
 import Bottomwarning from "../components/Bottomwarning";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Assuming you are using react-router
+import { useToast } from "../hooks/use-toast";
+
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  import.meta.env.VITE_API_URL?.replace(/\/api\/v1\/?$/, "") ||
+  "http://localhost:4000";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); // For redirection
+  const { toast } = useToast();
 
   const handleSignIn = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/api/v1/auth/login", {
+      const response = await axios.post(`${API_BASE}/api/v1/auth/login`, {
         email,
         password,
       });
@@ -22,6 +29,11 @@ const Signin = () => {
 
       navigate("/");
     } catch (error) {
+      toast({
+        title: "Sign in failed",
+        description: error.response?.data?.message || "Please check your connection and try again.",
+        variant: "destructive",
+      });
       console.error("Sign in failed", error);
     }
   };

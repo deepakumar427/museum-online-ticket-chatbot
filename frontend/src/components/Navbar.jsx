@@ -64,7 +64,9 @@ function Navbar() {
     localStorage.removeItem("token");
 
   try {
-    const res=await axios.post("http://localhost:4000/api/v1/auth/logout")
+    const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+    // ...
+    const res = await axios.post(`${API_BASE}/api/v1/auth/logout`)
     if (res.data.success) {
       navigate('/signin')
       console.log("Logged out successfully");

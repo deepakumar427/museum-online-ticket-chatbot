@@ -28,9 +28,22 @@ database.connect();
 
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://museum-online-ticket-chatbot-phi.vercel.app",
+  ...(process.env.FRONTEND_URL || "").split(",").filter(Boolean),
+];
+
 app.use(
   cors({
-    origin: "https://museum-online-ticket-chatbot-phi.vercel.app", // ← replace with your real deployed frontend URL
+    origin(origin, callback) {
+      // Requests from tools such as Postman have no Origin header.
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`CORS origin not allowed: ${origin}`));
+    },
     credentials: true,
   })
 );
@@ -61,5 +74,4 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
 	console.log(`App is listening at ${PORT}`);
 });
-
 

@@ -7,7 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useToast } from '../hooks/use-toast';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  import.meta.env.VITE_API_URL?.replace(/\/api\/v1\/?$/, "") ||
+  "http://localhost:4000";
 
 const Signup = () => {
   let navigate = useNavigate();
@@ -27,11 +30,15 @@ const Signup = () => {
         otp
       });
       if (response.data.success) {
-        navigate('/signin')
+        toast({ title: "Account created", description: "Please sign in." });
+        navigate('/signin');
       }
-      console.log("here", response.data);
-      navigate('/signin')
     } catch (error) {
+      toast({
+        title: "Could not create account",
+        description: error.response?.data?.message || "Please try again.",
+        variant: "destructive",
+      });
       console.error("Error signing up:", error);
     }
   };
@@ -48,7 +55,12 @@ const Signup = () => {
         })
       }
     } catch (error) {
-      console.error("Error signing up:", error);
+      toast({
+        title: "Could not send OTP",
+        description: error.response?.data?.message || "Please try again.",
+        variant: "destructive",
+      });
+      console.error("Error sending OTP:", error);
     }
   }
 
