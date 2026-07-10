@@ -10,6 +10,72 @@ const { paymentSuccessEmail } = require("../mail/templates/paymentSuccessEmail")
 const User = require("../models/User");
 const Ticket = require("../models/Tickets");
 
+const MEMBERSHIP_AMOUNT = 50000; // ₹500, in paise
+
+exports.createMembershipOrder = async (req, res) => {
+  try {
+    if (!process.env.RAZORPAY_KEY || !process.env.RAZORPAY_SECRET) {
+      return res.status(500).json({ success: false, message: "Razorpay is not configured on the server." });
+    }
+
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found." });
+    }
+    if (user.membership?.isMember) {
+      return res.status(409).json({ success: false, message: "You already have an active membership." });
+    }
+
+    const order = await instance.orders.create({
+      amount: MEMBERSHIP_AMOUNT,
+      currency: "INR",
+      receipt: `membership_${user._id.toString().slice(-16)}`,
+      notes: { userId: user._id.toString(), type: "membership" },
+    });
+
+    return res.status(200).json({
+      success: true,
+      order,
+      key: process.env.RAZORPAY_KEY,
+      amount: MEMBERSHIP_AMOUNT,
+    });
+  } catch (error) {
+    console.error("Membership order error:", error);
+    return res.status(500).json({ success: false, message: "Could not create membership order." });
+  }
+};
+
+exports.verifyMembershipPayment = async (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+  if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+    return res.status(400).json({ success: false, message: "Invalid payment data." });
+  }
+
+  const expectedSignature = crypto
+    .createHmac("sha256", process.env.RAZORPAY_SECRET)
+    .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+    .digest("hex");
+
+  if (expectedSignature !== razorpay_signature) {
+    return res.status(400).json({ success: false, message: "Payment verification failed." });
+  }
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { $set: { "membership.isMember": true } },
+      { new: true }
+    );
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found." });
+    }
+    return res.status(200).json({ success: true, message: "Membership activated successfully." });
+  } catch (error) {
+    console.error("Membership verification error:", error);
+    return res.status(500).json({ success: false, message: "Could not activate membership." });
+  }
+};
+
 exports.capturePayment = async (req, res) => {
   const { ticketId, tickets } = req.body; // Assuming tickets is an object with child, adult, and senior counts
   const userId = req.user.id;

@@ -1,6 +1,9 @@
 
 
 const express = require("express");
+const dotenv = require("dotenv");
+dotenv.config();
+
 const app = express();
 const userRoutes = require("./routes/user");
 const profileRoutes = require("./routes/profile");
@@ -12,12 +15,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { cloudinaryConnect } = require("./config/cloudinary");
 const fileUpload = require("express-fileupload");
-const dotenv = require("dotenv");
 const chatbotRoutes = require("./routes/chatbot");
-
-
-dotenv.config();
-
 
 const PORT = process.env.PORT || 4000;
 
@@ -74,4 +72,3 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
 	console.log(`App is listening at ${PORT}`);
 });
-

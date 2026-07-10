@@ -5,6 +5,7 @@
 // 	key_secret: process.env.RAZORPAY_SECRET,
 // });
 // config/razorpay.js
+require("dotenv").config();
 const Razorpay = require("razorpay");
 
 exports.instance = new Razorpay({

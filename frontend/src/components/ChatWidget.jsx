@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { MessageCircle, X, Send } from 'lucide-react';
 import axios from 'axios';
 
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  import.meta.env.VITE_API_URL?.replace(/\/api\/v1\/?$/, '') ||
+  'http://localhost:4000';
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -19,15 +24,12 @@ export default function ChatWidget() {
     setInput('');
 
     try {
-      const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
-
-      // 👇 you need "const response =" here — this was the actual bug
       const response = await axios.post(`${API_BASE}/api/v1/chatbot/message`, {
         text: userMsg.text,
         sessionId, // 👈 send it back so Dialogflow keeps context
       });
 
-      const botMsg = { sender: 'bot', text: response.data.reply || response.data.fulfillmentText };
+      const botMsg = { sender: 'bot', text: response.data.reply || "I couldn't find an answer for that." };
       setMessages((prev) => [...prev, botMsg]);
       setSessionId(response.data.sessionId); // 👈 save it for next message
     } catch (error) {

@@ -41,8 +41,6 @@ function PlanYourVisit() {
                             <div
                                 key={index}
                                 onClick={() => setSelectedMuseum(museum)} // Click event to set the selected museum
-                                onMouseEnter={() => setHoveredMuseum(museum)} // Hover event to show info
-                                onMouseLeave={() => setHoveredMuseum(null)} // Clear hovered museum info
                                 className="relative cursor-pointer flex items-start"
                             >
                                 <MuseumCard image={museum.image} title={museum.title} />  

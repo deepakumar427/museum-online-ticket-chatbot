@@ -1,6 +1,6 @@
 const express = require('express');
 const dialogflow = require('@google-cloud/dialogflow');
-const uuid = require('uuid');
+const { randomUUID } = require('crypto');
 
 const router = express.Router();
 
@@ -21,13 +21,18 @@ try {
 }
 
 router.post('/message', async (req, res) => {
-  if (!sessionClient) {
-    return res.status(503).json({ success: false, message: "Chatbot temporarily unavailable" });
-  }
-
-  const { text, sessionId = uuid.v4() } = req.body;
+  const { text, sessionId = randomUUID() } = req.body;
   if (!text || typeof text !== 'string') {
     return res.status(400).json({ success: false, message: "Message text is required" });
+  }
+
+  if (!sessionClient) {
+    return res.json({
+      success: true,
+      reply: getFallbackReply(text),
+      sessionId,
+      fallback: true,
+    });
   }
 
   try {
@@ -42,13 +47,31 @@ router.post('/message', async (req, res) => {
     });
 
     res.json({
-        reply: response.queryResult.fulfillmentText,
+        success: true,
+        reply: response.queryResult.fulfillmentText || getFallbackReply(text),
         sessionId
     });
   } catch (error) {
     console.error("Dialogflow error:", error.message);
-    res.status(500).json({ success: false, message: "Chatbot error" });
+    res.json({ success: true, reply: getFallbackReply(text), sessionId, fallback: true });
   }
 });
+
+function getFallbackReply(message) {
+  const text = message.toLowerCase();
+  if (/(ticket|price|cost|book)/.test(text)) {
+    return "You can start by choosing a museum in Plan Your Visit. Ticket availability and prices are shown during booking.";
+  }
+  if (/(time|hour|open|close|timing)/.test(text)) {
+    return "Museum hours can vary by venue and exhibition. Please check the selected museum's visitor information before travelling.";
+  }
+  if (/(member|membership|discount)/.test(text)) {
+    return "Membership costs ₹500 and includes exclusive benefits. Open the Membership page and choose Join Today to pay securely.";
+  }
+  if (/(hello|hi|hey)/.test(text)) {
+    return "Hello! I can help with museum visits, tickets, timings, and membership.";
+  }
+  return "I can help with tickets, museum timings, and membership. What would you like to know?";
+}
 
 module.exports = router;

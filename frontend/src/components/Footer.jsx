@@ -10,7 +10,9 @@ function Footer() {
       <div className='px-5 flex flex-col items-center justify-between'>
         <h1 className='footer-heading mb-5 '>Get Tickets</h1>
         <p>Visitors can purchase exhibition tickets onsite or online. Events, and cinema screenings may require separate tickets. Children ages 6 and below do not need a ticket.</p>
-        <FooterButton text={"Get Tickets"} />
+        <Link to={'/plan-your-visit'}>
+          <FooterButton text={"Get Tickets"} />
+        </Link>
       </div>
       
       <div className='px-5 flex flex-col items-center justify-between'>
