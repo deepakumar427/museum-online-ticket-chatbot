@@ -16,7 +16,7 @@ function ViewMuseumDetails() {
     return (
         <div className='mt-[100px] bg-[#FAF9F6] flex flex-col'>
             <section>
-                <div className='relative h-[400px] w-full'>
+                <div className='relative h-64 w-full sm:h-[400px] lg:h-[400px]'>
                     <img
                         src={museum ? museum.image : 'defaultimage'}
                         className="h-full w-full object-cover"
@@ -25,15 +25,15 @@ function ViewMuseumDetails() {
                     <div className='absolute opacity-65 inset-0 bg-black'></div>
                 </div>
 
-                <div className='absolute left-[220px] text-8xl text-white px-5 py-3 top-[190px]'>
-                    <h1>{museum ? museum.title : "Museum Not Found"}</h1>
+                <div className='absolute inset-x-0 top-[165px] px-5 text-center text-4xl text-white sm:top-[190px] sm:text-6xl lg:left-[220px] lg:right-auto lg:top-[190px] lg:px-5 lg:py-3 lg:text-left lg:text-8xl'>
+                    <h1 className='break-words'>{museum ? museum.title : "Museum Not Found"}</h1>
                 </div>
 
             </section>
             <section className='mt-16'>
-                <div className='flex min-h-[800px] items-center w-full flex-col px-16 my-5'>
-                    <h1 className='text-8xl'>Visiting Information</h1>
-                    <div className='pt-28 gap-8 grid h-[400px] text-center  w-[80%] grid-cols-1 md:grid-cols-3'>
+                <div className='my-5 flex w-full flex-col items-center px-5 sm:px-10 lg:min-h-[800px] lg:px-16'>
+                    <h1 className='text-center text-4xl sm:text-6xl lg:text-8xl'>Visiting Information</h1>
+                    <div className='grid w-full grid-cols-1 gap-16 pt-20 text-center lg:h-[400px] lg:w-[80%] lg:grid-cols-3 lg:gap-8 lg:pt-28'>
                         <ViewMuseumCard title={"Purchase Ticket"}
                             icon={<Ticket className='size-16 ' />}
                             iconColor={"#318CE7"}
@@ -62,13 +62,13 @@ function ViewMuseumDetails() {
             </section>
 
             <section className='map-section mt-10'>
-                <div className='flex w-full min-h-[400px]'>
-                    <div className='flex flex-col w-[900px] p-10 gap-5 pt-[5%]'>
-                        <h1 className='text-6xl'>Getting Here</h1>
+                <div className='flex min-h-[400px] w-full flex-col lg:flex-row'>
+                    <div className='flex w-full flex-col gap-5 p-6 lg:w-[900px] lg:p-10 lg:pt-[5%]'>
+                        <h1 className='text-4xl sm:text-6xl lg:text-6xl'>Getting Here</h1>
                         <span>Address</span>
                         <p>Verdant Bluffs district of Los Santos</p>
                     </div>
-                    <div className='relative h-[450px] w-full overflow-x-hidden overflow-y-hidden'>
+                    <div className='relative h-72 w-full overflow-hidden sm:h-[450px] lg:h-[450px]'>
                         <img
                             src={museum?museum.map:""}
                             className='h-full w-full  object-cover scale-150'
@@ -83,9 +83,9 @@ function ViewMuseumDetails() {
             </section>
 
             <section className='Restaurant-section  mt-16'>
-            <div className='flex min-h-[500px] items-center w-[100%] flex-col my-5'>
-                    <h1 className='text-6xl'>Nearby Restaurants and Shops</h1>
-                    <div className='mt-20 w-[100%] flex  flex-col gap-2'>
+            <div className='my-5 flex min-h-[500px] w-full flex-col items-center'>
+                    <h1 className='px-5 text-center text-4xl sm:text-6xl lg:text-6xl'>Nearby Restaurants and Shops</h1>
+                    <div className='mt-12 flex w-full flex-col gap-2 lg:mt-20'>
                         <RestaurantCard image={restaurant1}
                         time1={"11:00 AM – 10:00 PM"}
                         time2={"11:00 AM - 8:00PM"}

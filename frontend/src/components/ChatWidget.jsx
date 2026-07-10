@@ -41,10 +41,10 @@ export default function ChatWidget() {
   // ...rest unchanged
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100]">
+    <div className="fixed bottom-4 right-4 z-[100] sm:bottom-6 sm:right-6">
       {/* Chat Window */}
       {isOpen && (
-        <div className="mb-4 w-80 sm:w-96 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col h-[450px] animate-fade-up">
+        <div className="mb-4 flex h-[min(450px,70vh)] w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-2xl animate-fade-up sm:w-96 lg:h-[450px]">
           {/* Header */}
           <div className="bg-black text-white p-4 flex justify-between items-center">
             <div>

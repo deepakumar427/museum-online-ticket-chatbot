@@ -35,12 +35,12 @@ function Container() {
 
   return (
     <div >
-      <div className='relative h-[2600px] grid grid-cols-1 md:grid-cols-3'>
-        <div className='h-full bg-[#fc578a]' style={{backgroundColor:color1, transition:'background-color 0.5s ease-in'}}></div>
-        <div className='h-full bg-[#8f8afa]' style={{backgroundColor:color2, transition:'background-color 0.5s ease-in'}}></div>
-        <div className='h-full bg-[#ed6c31]'  style={{backgroundColor:color3, transition:'background-color 0.5s ease-in'}}></div>
+      <div className='relative grid grid-cols-1 bg-[#4169E1] lg:h-[2600px] lg:grid-cols-3 lg:bg-transparent'>
+        <div className='hidden h-full bg-[#fc578a] lg:block' style={{backgroundColor:color1, transition:'background-color 0.5s ease-in'}}></div>
+        <div className='hidden h-full bg-[#8f8afa] lg:block' style={{backgroundColor:color2, transition:'background-color 0.5s ease-in'}}></div>
+        <div className='hidden h-full bg-[#ed6c31] lg:block'  style={{backgroundColor:color3, transition:'background-color 0.5s ease-in'}}></div>
 
-        <div className='absolute inset-0 text-white flex flex-col justify-around items-center  py-4' >
+        <div className='col-span-1 flex flex-col items-center justify-around py-12 text-white lg:absolute lg:inset-0 lg:py-4' >
           <div className='flex flex-col items-center justify-center'>
             <h1 className='container-title'>Events</h1>
             <EventComponent/>
@@ -48,11 +48,11 @@ function Container() {
           
           
           <div className='flex flex-col  justify-center items-center'>
-            <div className='relative flex items-center justify-center'>
+            <div className='relative flex flex-col items-center justify-center sm:block'>
               <h1 className='container-title  top-0 '>Become a</h1>
-              <h1 className='container-title absolute top-28'>Member</h1>
+              <h1 className='container-title sm:absolute sm:top-28'>Member</h1>
             </div>
-            <div className='mt-52'>
+            <div className='mt-10 sm:mt-52'>
             <ImageSlider/>
             </div>
           </div>

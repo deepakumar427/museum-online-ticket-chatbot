@@ -39,17 +39,17 @@ const Signin = () => {
   };
 
   return (
-    <div className="flex justify-center h-screen w-full items-center">
-      <div className="flex items-center h-full w-full ">
-        <div className="flex flex-col items-center w-[40%]">
+    <div className="flex min-h-screen w-full items-center py-10 lg:h-screen lg:py-0">
+      <div className="flex w-full flex-col items-center gap-10 px-5 lg:h-full lg:flex-row lg:gap-0 lg:px-0">
+        <div className="flex w-full flex-col items-center text-center lg:w-[40%] lg:text-left">
           <Heading label={"Sign In"}></Heading>
-          <div className="w-[60%]">
+          <div className="max-w-md lg:w-[60%] lg:max-w-none">
             <p>
               Log in to your account to continue with membership purchase or manage your account and preferences.
             </p>
           </div>
         </div>
-        <div className="w-[50%]">
+        <div className="w-full max-w-xl lg:w-[50%] lg:max-w-none">
           <Inputbox
             onChange={(e) => setEmail(e.target.value)}
             placeholder={"Enter your Email"}

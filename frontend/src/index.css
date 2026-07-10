@@ -55,6 +55,10 @@
   font-family: "Roboto Mono", monospace;
   font-style:normal;
 }
+@media (max-width: 1023px) {
+  html, body { overflow-x: hidden; }
+  .container-title { font-size: clamp(3rem, 10vw, 5rem); max-width: 100%; line-height: 1.1; }
+}
 @layer base {
   :root {
         --background:0 0% 100%;

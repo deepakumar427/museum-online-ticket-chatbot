@@ -2,7 +2,7 @@ import React from 'react';
 // import BackgorundVideoOverlay from './BackgorundVideoOverlay';
 const BackgroundVideo = () => {
   return (
-    <div className="relative w-full h-[642px] ">
+    <div className="relative h-[60vh] min-h-[360px] w-full sm:h-[642px] lg:h-[642px] ">
       <video 
         autoPlay 
         muted 

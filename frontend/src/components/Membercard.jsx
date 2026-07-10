@@ -73,18 +73,18 @@ function Membercard({ title, price, buttontext }) {
     };
 
     return (
-        <div className='relative w-[180%] p-8 grid grid-cols-2 gap-4 bg-[#40b8d1] items-center hover:scale-105 transition-all hover:-translate-x-6'>
-            <div className='flex flex-col w-[140%] gap-3 text-white'>
-                <h1 className='text-5xl'>{title}</h1>
-                <span className='text-4xl'>{price}</span>
+        <div className='relative w-full rounded-2xl bg-[#40b8d1] p-6 shadow-xl transition sm:p-8 lg:w-[180%] lg:rounded-none lg:grid lg:grid-cols-2 lg:gap-4 lg:items-center lg:hover:scale-105 lg:hover:-translate-x-6'>
+            <div className='flex flex-col gap-3 text-white lg:w-[140%]'>
+                <h1 className='text-3xl sm:text-5xl lg:text-5xl'>{title}</h1>
+                <span className='text-2xl sm:text-4xl lg:text-4xl'>{price}</span>
             </div>
 
-            <div className='flex justify-end items-center'>
+            <div className='mt-6 flex lg:mt-0 lg:justify-end lg:items-center'>
                 <button
                     type='button'
                     onClick={startMembershipPayment}
                     disabled={isPaying}
-                    className='absolute p-4 right-0 px-16 bg-black text-white disabled:cursor-not-allowed disabled:opacity-60'
+                    className='w-full rounded-lg bg-black p-4 text-white disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-12 lg:absolute lg:right-0 lg:w-auto lg:rounded-none lg:px-16'
                 >
                     {isPaying ? 'Opening checkout…' : buttontext}
                 </button>

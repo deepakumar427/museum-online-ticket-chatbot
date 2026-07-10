@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 function Footer() {
   return (
-    <div className='bg-[#4169E1] text-white text-center  grid grid-cols-1 md:grid-cols-4 p-10 '>
+    <div className='grid grid-cols-1 gap-10 bg-[#4169E1] p-6 text-center text-white sm:p-10 lg:grid-cols-4 lg:gap-0 lg:p-10 '>
       
       <div className='px-5 flex flex-col items-center justify-between'>
         <h1 className='footer-heading mb-5 '>Get Tickets</h1>

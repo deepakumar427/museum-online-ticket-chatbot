@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { User } from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import HocConditionalRendering from "./HocConditionalRendering";
 import { jwtDecode } from "jwt-decode";
@@ -19,6 +19,7 @@ function Navbar() {
   const navigate = useNavigate();
   const location = useLocation(); // Get current route
   const [userPayload, setUserPayload] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     // Get the token from localStorage (or cookies if you use that)
@@ -90,10 +91,10 @@ function Navbar() {
         style={{ opacity: opacity }}
       ></div>
 
-      <div className="relative flex items-center w-full h-full justify-around z-10">
-        <p className="navbar-text intro-title">TIXPLORE.</p>
+      <div className="relative flex h-full w-full items-center justify-between px-4 sm:px-8 lg:justify-around lg:px-0 z-10">
+        <p className="intro-title text-2xl sm:text-4xl lg:navbar-text">TIXPLORE.</p>
 
-        <div className="w-[30%]">
+        <div className="hidden lg:w-[30%] lg:block">
           <ul className="nav-links hidden md:flex gap-5 w-full">
             <li>
               <NavLink
@@ -146,20 +147,20 @@ function Navbar() {
           </ul>
         </div>
 
-        <div className="flex gap-3 items-center">
+        <div className="flex items-center gap-2 lg:gap-3">
           {
             userPayload ? (
               <>
               <Popover>
                 <PopoverTrigger>
                 <div
-                className="w-16 h-16 flex items-center justify-center bg-orange-500 text-white rounded-full text-xl font-bold"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 text-base font-bold text-white sm:h-12 sm:w-12 lg:h-16 lg:w-16 lg:text-xl"
                 title={userPayload.userId} // Tooltip with the full userId
               >
                 {userPayload.email.charAt(0).toUpperCase()}
               </div>
                 </PopoverTrigger>
-                <PopoverContent className="flex flex-col gap-8 absolute p-5 top-4 -left-60 w-[365px]">
+                <PopoverContent className="flex w-[min(22rem,calc(100vw-2rem))] flex-col gap-5 p-5 lg:absolute lg:top-4 lg:-left-60 lg:w-[365px] lg:gap-8">
                   <ul className="flex flex-col gap-2">
                     {
                       userPayload.id?(
@@ -184,14 +185,24 @@ function Navbar() {
               : (
                 <button
                   onClick={() => navigate("/signup")}
-                  className="text-xl flex items-center justify-center rounded-lg hover:bg-green-500 p-3"
+                  className="flex items-center justify-center rounded-lg p-2 text-sm hover:bg-green-500 sm:text-xl sm:p-3 lg:text-xl"
                 >
                   <User />
                   Sign-Up
                 </button>)
           }
+          <button onClick={() => setMenuOpen((open) => !open)} className="rounded-md p-2 lg:hidden" aria-label="Toggle navigation">
+            {menuOpen ? <X /> : <Menu />}
+          </button>
 
         </div>
+        {menuOpen && <div className="absolute left-4 right-4 top-full rounded-xl bg-slate-950 p-4 shadow-2xl lg:hidden">
+          <div className="flex flex-col gap-2 text-base">
+            <NavLink onClick={() => setMenuOpen(false)} to="/" className="rounded-lg px-3 py-2 hover:bg-white/10">Home</NavLink>
+            <NavLink onClick={() => setMenuOpen(false)} to="/membership" className="rounded-lg px-3 py-2 hover:bg-white/10">Membership</NavLink>
+            <NavLink onClick={() => setMenuOpen(false)} to="/plan-your-visit" className="rounded-lg px-3 py-2 hover:bg-white/10">Museums</NavLink>
+          </div>
+        </div>}
       </div>
     </nav>
   );

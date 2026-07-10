@@ -8,11 +8,11 @@ function RestaurantCard({ image, desc, time1, time2, location }) {
     <div
       onMouseEnter={() => setChangeColor('#FF6347')}
       onMouseLeave={() => setChangeColor(null)}
-      className='flex justify-around px-28 gap-8 p-5 transform transition-transform duration-300 animate-ease-in'
+      className='flex flex-col gap-6 p-5 sm:p-8 lg:flex-row lg:justify-around lg:gap-8 lg:px-28 transform transition-transform duration-300 animate-ease-in'
       style={{ backgroundColor: changecolor ? changecolor : '' }}
     >
       <div
-        className=' w-[650px] h-[255px] transform transition-transform duration-300 ease-in-out'
+        className='h-56 w-full lg:h-[255px] lg:w-[650px] transform transition-transform duration-300 ease-in-out'
         style={{ transform: changecolor ? 'translateX(10px)' : 'translateX(0)' }}
       >
         <img

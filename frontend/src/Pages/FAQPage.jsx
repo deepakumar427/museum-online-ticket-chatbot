@@ -7,11 +7,11 @@ function FAQPage() {
     return (
         <div className='mt-[100px]'>
             <div className='pt-20 flex items-center flex-col gap-4'>
-                <div>
-                    <h1 className='intro-title text-8xl'>Your Right to Know</h1>
+                <div className='px-5 text-center'>
+                    <h1 className='intro-title text-4xl sm:text-6xl lg:text-8xl'>Your Right to Know</h1>
                 </div>
 
-                <div className='FAQ-container  p-4 my-10 px-10 h-[50%] w-[50%]'>
+                <div className='FAQ-container my-10 w-full max-w-3xl p-4 sm:px-10 lg:h-[50%] lg:w-[50%] lg:max-w-none'>
                     
                     <Panel
                         title="What is the refund policy?"
@@ -62,4 +62,3 @@ function FAQPage() {
 }
 
 export default FAQPage;
-

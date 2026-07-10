@@ -6,9 +6,9 @@ function MuseumCard({ image, title }) {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <div className='w-full flex gap-10  justify-end'>
+        <div className='flex w-full flex-col gap-5 sm:flex-row sm:gap-8 lg:justify-end lg:gap-10'>
             <div
-                className='h-[240px] w-[400px]'
+                className='h-56 w-full sm:h-[240px] sm:w-1/2 lg:w-[400px]'
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)} >
                 
@@ -19,14 +19,14 @@ function MuseumCard({ image, title }) {
                 />
 
             </div>
-            <div className='flex flex-col items-center gap-12 '>
+            <div className='flex flex-1 flex-col items-start justify-between gap-5 sm:gap-8 lg:flex-none lg:items-center lg:gap-12'>
                 <h1  onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                className={`museum-title text-6xl break-words w-[400px] ${isHovered ? 'underline' : ''}`}
+                className={`museum-title break-words text-3xl sm:text-4xl lg:w-[400px] lg:text-6xl ${isHovered ? 'underline' : ''}`}
                 >
                 {title}
                 </h1>
-                <div className='w-[50%]'>
+                <div className='w-full sm:w-1/2 lg:w-[50%]'>
                 <Link to={`/view/${encodeURIComponent(title)}`}>
                 <button className='bg-black w-full text-white p-2 rounded-md hover:opacity-85  '>View</button>
                 </Link>

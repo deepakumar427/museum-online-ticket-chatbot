@@ -104,15 +104,15 @@ const Signup = () => {
   }
 
   return (
-    <div className='flex justify-center h-screen w-full items-center'>
-      <div className='flex items-center h-full w-full'>
-        <div className='flex flex-col items-center w-[40%]'>
+    <div className='flex min-h-screen w-full items-center py-10 lg:h-screen lg:py-0'>
+      <div className='flex w-full flex-col items-center gap-10 px-5 lg:h-full lg:flex-row lg:gap-0 lg:px-0'>
+        <div className='flex w-full flex-col items-center text-center lg:w-[40%] lg:text-left'>
           <Heading label={"Sign Up"}></Heading>
-          <div className=' w-[60%]'>
+          <div className='max-w-md lg:w-[60%] lg:max-w-none'>
             <p>Sign up through you account to continue with membership purchase or manage your account and preferences.</p>
           </div>
         </div>
-        <div className='flex flex-col gap-1 w-[50%]'>
+        <div className='flex w-full max-w-xl flex-col gap-1 lg:w-[50%] lg:max-w-none'>
           <Inputbox
             onChange={(e) => setUsername(e.target.value)}
             placeholder={"Enter your Name"}
@@ -124,7 +124,7 @@ const Signup = () => {
               placeholder={"Enter your Email"}
               label={"Email*"}
             ></Inputbox>
-            <button className='absolute right-0 top-[42px] rounded-sm bg-black text-white p-2' onClick={HandleGetOtp}>Get Otp</button>
+            <button className='absolute right-0 top-[42px] rounded-sm bg-black p-2 text-sm text-white sm:text-base' onClick={HandleGetOtp}>Get Otp</button>
           </div>
 
           <Inputbox
