@@ -248,7 +248,11 @@ exports.sendotp = async (req, res) => {
       message: `OTP sent successfully. Please check your inbox.`,
     })
   } catch (error) {
-    console.log(error.message)
-    return res.status(500).json({ success: false, error: error.message })
+    console.error("OTP request failed:", error.message)
+    return res.status(500).json({
+      success: false,
+      message: "Could not send OTP email.",
+      error: error.message,
+    })
   }
 }

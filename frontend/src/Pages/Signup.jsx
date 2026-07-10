@@ -96,7 +96,7 @@ const Signup = () => {
     } catch (error) {
       toast({
         title: "Could not send OTP",
-        description: error.response?.data?.message || "Please try again.",
+        description: error.response?.data?.error || error.response?.data?.message || "Please try again.",
         variant: "destructive",
       });
       console.error("Error sending OTP:", error);
