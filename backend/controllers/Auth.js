@@ -4,15 +4,19 @@ const OTP = require("../models/Otp")
 const jwt = require("jsonwebtoken")
 const otpGenerator = require("otp-generator")
 const mailSender = require("../utils/mailSender")
+const { OAuth2Client } = require("google-auth-library")
 
 const Profile = require("../models/Profile")
 require("dotenv").config()
+
+const googleClient = new OAuth2Client()
 
 // Signup Controller for Registering USers
 
 exports.signup = async (req, res) => {
   try {
-    const { username, email, password, otp } = req.body
+    const { username, password, otp } = req.body
+    const email = req.body.email?.trim().toLowerCase()
 
     if (!username || !email || !password || !otp) {
       return res.status(403).send({
@@ -75,7 +79,8 @@ exports.signup = async (req, res) => {
 // Login controller for authenticating users
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body
+    const { password } = req.body
+    const email = req.body.email?.trim().toLowerCase()
 
     if (!email || !password) {
       return res.status(400).json({
@@ -151,10 +156,68 @@ exports.logout = async (req, res) => {
   })
 }
 
+exports.googleLogin = async (req, res) => {
+  try {
+    const { credential } = req.body
+    if (!credential || !process.env.GOOGLE_CLIENT_ID) {
+      return res.status(400).json({ success: false, message: "Google Sign-In is not configured." })
+    }
+
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    })
+    const payload = ticket.getPayload()
+    if (!payload.email || !payload.email_verified) {
+      return res.status(401).json({ success: false, message: "Google email could not be verified." })
+    }
+
+    const email = payload.email.toLowerCase()
+    let user = await User.findOne({ email }).populate("additionalDetails")
+    if (!user) {
+      const profileDetails = await Profile.create({
+        gender: null,
+        dateOfBirth: null,
+        about: null,
+        contactNumber: null,
+      })
+      user = await User.create({
+        username: payload.name || email.split("@")[0],
+        email,
+        password: await bcrypt.hash(require("crypto").randomUUID(), 10),
+        additionalDetails: profileDetails._id,
+        image: payload.picture || "",
+      })
+      await user.populate("additionalDetails")
+    }
+
+    const token = jwt.sign(
+      {
+        email: user.email,
+        id: user._id,
+        membership: user.membership.isMember,
+        discountPoints: user.membership.discountPoints,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "24h" }
+    )
+
+    user.password = undefined
+    return res.status(200).json({ success: true, token, user, message: "Google Sign-In successful." })
+  } catch (error) {
+    console.error("Google Sign-In failed:", error.message)
+    return res.status(401).json({ success: false, message: "Google Sign-In could not be verified." })
+  }
+}
+
 // Send OTP For Email Verification
 exports.sendotp = async (req, res) => {
   try {
-    const { email } = req.body
+    const email = req.body.email?.trim().toLowerCase()
+
+    if (!email) {
+      return res.status(400).json({ success: false, message: "Email is required" })
+    }
 
     const checkUserPresent = await User.findOne({ email })
     if (checkUserPresent) {
@@ -179,11 +242,10 @@ exports.sendotp = async (req, res) => {
       existingOtp = await OTP.findOne({ otp })
     }
     const otpPayload = { email, otp }
-    const otpBody = await OTP.create(otpPayload)
+    await OTP.create(otpPayload)
     res.status(200).json({
       success: true,
-      message: `OTP Sent Successfully`,
-      otp,
+      message: `OTP sent successfully. Please check your inbox.`,
     })
   } catch (error) {
     console.log(error.message)

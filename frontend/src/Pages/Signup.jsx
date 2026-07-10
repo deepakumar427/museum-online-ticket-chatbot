@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Heading } from '../components/Heading';
 import { Inputbox } from '../components/Inputbox';
 import Button from '../components/Button';
@@ -20,6 +20,47 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [otp, setOtp] = useState(null);
+  const googleButtonRef = useRef(null);
+
+  useEffect(() => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (!clientId) return;
+
+    const renderGoogleButton = () => {
+      window.google.accounts.id.initialize({
+        client_id: clientId,
+        callback: async ({ credential }) => {
+          try {
+            const response = await axios.post(`${API_BASE}/api/v1/auth/google`, { credential });
+            localStorage.setItem("token", response.data.token);
+            toast({ title: "Signed in with Google" });
+            navigate('/');
+          } catch (error) {
+            toast({ title: "Google Sign-In failed", description: error.response?.data?.message || "Please try again.", variant: "destructive" });
+          }
+        },
+      });
+      window.google.accounts.id.renderButton(googleButtonRef.current, {
+        theme: 'outline',
+        size: 'large',
+        width: 300,
+        text: 'signup_with',
+      });
+    };
+
+    const existingScript = document.getElementById('google-identity-service');
+    if (existingScript) {
+      existingScript.addEventListener('load', renderGoogleButton);
+      if (window.google) renderGoogleButton();
+      return () => existingScript.removeEventListener('load', renderGoogleButton);
+    }
+    const script = document.createElement('script');
+    script.id = 'google-identity-service';
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.onload = renderGoogleButton;
+    document.head.appendChild(script);
+  }, [navigate, toast]);
 
   const handleSignup = async () => {
     try {
@@ -50,9 +91,7 @@ const Signup = () => {
       });
       if (response.data.success) {
         console.log(response.data);
-        toast({
-          title: response.data.otp
-        })
+        toast({ title: "OTP sent", description: "Check your email inbox and spam folder." })
       }
     } catch (error) {
       toast({
@@ -104,7 +143,14 @@ const Signup = () => {
             <Button
               onClick={handleSignup}
               label={"Sign Up"}></Button>
-            <Button label={"Sign in With Google"}></Button>
+            {import.meta.env.VITE_GOOGLE_CLIENT_ID ? (
+              <div ref={googleButtonRef} className='mb-2 flex justify-center'></div>
+            ) : (
+              <Button
+                label={"Sign up With Google"}
+                onClick={() => toast({ title: "Google Sign-In is not configured", description: "Add VITE_GOOGLE_CLIENT_ID in Vercel and GOOGLE_CLIENT_ID in Render.", variant: "destructive" })}
+              ></Button>
+            )}
             <Bottomwarning label={"Already have an account?"} buttontext={"Sign In"} to={"/signin"}></Bottomwarning>
           </div>
         </div>
