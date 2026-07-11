@@ -1,5 +1,7 @@
 Tixplore – Intelligent Museum Ticketing & Guide System
 
+Live Demo: https://museum-online-ticket-chatbot-phi.vercel.app/
+
 Tixplore is a modern full-stack web application designed to simplify museum ticket discovery, booking, and visitor engagement. It features an advanced Hybrid AI Chatbot Architecture that combines structured intent fulfillment via Dialogflow with an unstructured LLM fallback powered by Gemini.
 
 🚀 Key Features
@@ -42,6 +44,7 @@ Deployment Platforms: Vercel (Frontend), Render (Backend)
     │   └── ...
 
 
+
 ⚙️ Local Setup Instructions
 
 Prerequisites
@@ -61,9 +64,11 @@ Navigate into the backend repository:
 cd backend
 
 
+
 Install dependencies:
 
 npm install
+
 
 
 Create a .env file in the root of the /backend folder:
@@ -80,9 +85,11 @@ DIALOGFLOW_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYOUR_KEY_HERE\n-----END PRI
 GEMINI_API_KEY="AIzaSy..."
 
 
+
 Start the local development server:
 
 npm run dev
+
 
 
 Frontend Setup
@@ -92,10 +99,12 @@ Open a separate terminal split and navigate to the frontend directory:
 cd frontend
 
 
+
 Install dependencies and start the Vite dev server:
 
 npm install
 npm run dev
+
 
 
 Open http://localhost:5173 in your browser.
