@@ -73,18 +73,18 @@ function Membercard({ title, price, buttontext }) {
     };
 
     return (
-        <div className='relative w-full max-w-full overflow-hidden rounded-2xl bg-[#40b8d1] p-6 shadow-xl transition sm:p-8 lg:rounded-none lg:grid lg:grid-cols-2 lg:gap-4 lg:items-center lg:pr-8 lg:hover:scale-105'>
+        <div className='relative flex w-full max-w-full flex-col items-center justify-between gap-6 overflow-hidden rounded-2xl bg-[#40b8d1] p-8 shadow-2xl md:flex-row md:p-10'>
             <div className='flex min-w-0 flex-col gap-3 text-white'>
                 <h1 className='text-3xl sm:text-5xl lg:text-5xl'>{title}</h1>
                 <span className='text-2xl sm:text-4xl lg:text-4xl'>{price}</span>
             </div>
 
-            <div className='mt-6 flex min-w-0 lg:mt-0 lg:items-center lg:justify-end'>
+            <div className='flex min-w-0'>
                 <button
                     type='button'
                     onClick={startMembershipPayment}
                     disabled={isPaying}
-                    className='w-full rounded-lg bg-black p-4 text-white disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-12 lg:w-auto lg:rounded-none lg:px-16'
+                    className='w-full rounded-full bg-black px-8 py-3 text-white transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto'
                 >
                     {isPaying ? 'Opening checkout…' : buttontext}
                 </button>

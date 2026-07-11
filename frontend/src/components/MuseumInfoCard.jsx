@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 function MuseumInfoCard({title,text,museumTitle}) {
   return (
     <div className='flex flex-col'>
-        <h1 className='text-3xl mb-5'>{title}</h1>
-        <span>{text}</span>
+        <h1 className='mb-4 text-3xl font-bold'>{title}</h1>
+        <span className='leading-relaxed text-gray-600'>{text}</span>
         {museumTitle ? (
           <Link to={`/tickets/${encodeURIComponent(museumTitle)}`} className='mt-10'>
             <button className='rounded-full bg-black px-6 py-3 text-white transition hover:scale-105'>Get Tickets</button>

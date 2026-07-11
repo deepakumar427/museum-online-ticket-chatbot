@@ -14,7 +14,7 @@ function MuseumCard({ image, title }) {
                 
                 <img
                     src={image}
-                    className='rounded-sm object-cover w-full h-full hover:scale-110 transition-all'
+                    className='h-full w-full rounded-xl object-cover shadow-md transition-all hover:scale-110'
                     alt=""
                 />
 
@@ -22,13 +22,13 @@ function MuseumCard({ image, title }) {
             <div className='flex flex-1 flex-col items-start justify-between gap-5 sm:gap-8 lg:flex-none lg:items-center lg:gap-12'>
                 <h1  onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                className={`museum-title break-words text-3xl sm:text-4xl lg:w-[400px] lg:text-6xl ${isHovered ? 'underline' : ''}`}
+                className={`museum-title mb-4 break-words text-3xl font-bold text-gray-900 lg:w-[400px] ${isHovered ? 'no-underline' : ''}`}
                 >
                 {title}
                 </h1>
                 <div className='w-full sm:w-1/2 lg:w-[50%]'>
                 <Link to={`/view/${encodeURIComponent(title)}`}>
-                <button className='bg-black w-full text-white p-2 rounded-md hover:opacity-85  '>View</button>
+                <button className='w-full rounded-lg bg-black px-8 py-3 text-white transition-transform hover:-translate-y-1 md:w-auto'>View</button>
                 </Link>
                 </div>
                 

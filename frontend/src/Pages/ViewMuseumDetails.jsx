@@ -32,18 +32,18 @@ function ViewMuseumDetails() {
             </section>
             <section className='mt-16'>
                 <div className='my-5 flex w-full flex-col items-center px-5 sm:px-10 lg:min-h-[800px] lg:px-16'>
-                    <h1 className='text-center text-4xl sm:text-6xl lg:text-8xl'>Visiting Information</h1>
+                    <h1 className='mb-12 text-center text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl'>Visiting Information</h1>
                     <div className='grid w-full grid-cols-1 items-stretch gap-16 pt-20 text-center lg:w-[80%] lg:grid-cols-3 lg:gap-8 lg:pt-28'>
                         <ViewMuseumCard title={"Purchase Ticket"}
-                            icon={<Ticket className='size-16 ' />}
+                            icon={<Ticket className='mb-6 h-10 w-10 text-gray-800' />}
                             iconColor={"#318CE7"}
-                            buttonText={"click to Get Ticket"}
+                            buttonText={"Get Tickets"}
                             path={`/tickets/${encodeURIComponent(museum.title)}`}
                             text={`Welcome to ${museum.title}! Experience museum exclusive offers and purchase tickets for full access to exclusive exhibits.Become a member today for unlimited General Admission ticket discounts, and a variety of exclusive benefits.Visit our 'Membership' section for more details.`} />
 
                         <ViewMuseumCard title={"Opening Hours"}
                             iconColor={"#FF6347"}
-                            icon={<Clock className='size-16' />} optionalchildren={
+                            icon={<Clock className='mb-6 h-10 w-10 text-gray-800' />} optionalchildren={
                                 <div className='details flex flex-col gap-5'>
                                     <p>Tuesdays to Thursdays and weekends: 10:00–18:00</p>
                                     <p>Fridays: 10:00–22:00</p>
@@ -53,7 +53,7 @@ function ViewMuseumDetails() {
                                 </div>
                             } />
 
-                        <ViewMuseumCard iconColor={"#FFC72C"} icon={<Lightbulb className='size-16' />} title={"Tips for Visiting"} text={"Bags and backpacks smaller than 30 cm x 42 cm x 10 cm are allowed in the galleries, but backpacks must be worn on the front of the body with the strap(s) slung over one or both shoulders. Larger items must be checked in to lockers or the cloakroom, available for rental.We welcome wheelchairs and baby strollers in the galleries. These are also available to borrow free of charge on a first-come, first-served basis."} />
+                        <ViewMuseumCard iconColor={"#FFC72C"} icon={<Lightbulb className='mb-6 h-10 w-10 text-gray-800' />} title={"Tips for Visiting"} text={"Bags and backpacks smaller than 30 cm x 42 cm x 10 cm are allowed in the galleries, but backpacks must be worn on the front of the body with the strap(s) slung over one or both shoulders. Larger items must be checked in to lockers or the cloakroom, available for rental.We welcome wheelchairs and baby strollers in the galleries. These are also available to borrow free of charge on a first-come, first-served basis."} />
 
                     </div>
 
@@ -87,18 +87,20 @@ function ViewMuseumDetails() {
                     <h1 className='px-5 text-center text-4xl sm:text-6xl lg:text-6xl'>Nearby Restaurants and Shops</h1>
                     <div className='mt-12 flex w-full flex-col gap-2 lg:mt-20'>
                         <RestaurantCard image={restaurant1}
+                        name={"Mamagoto"}
                         time1={"11:00 AM – 10:00 PM"}
                         time2={"11:00 AM - 8:00PM"}
                         location={"Cityhall Mall,Saket,India"}
-                        desc={" Mamagoto has been India’s first pan-Asian café, blending street hawker cuisine with vibrant urban art and manga-inspired décor. Known for its quirky and colorful atmosphere, Mamagoto also offers a retail line of curry pastes and stir-fry sauces."}/>
+                        desc={"India’s first pan-Asian café, blending street hawker cuisine with vibrant urban art and manga-inspired décor. Known for its quirky and colorful atmosphere, it also offers a retail line of curry pastes and stir-fry sauces."}/>
                         
                         <hr className='border-black' />
                         
                         <RestaurantCard image={restaurant2}
+                        name={"Sly Granny Cafe"}
                         time1={"12:00 PM – 11:00 PM"}
                         time2={"1:00 PM - 9:00PM"}
                         location={"Cityhall Mall,Saket,India "}
-                        desc={" Experience the vibrant flavors of India and Southeast Asia at Sly Granny Cafe. With aromatic spices and bold ingredients, the dishes here are a journey through rich culinary traditions."}/>                 
+                        desc={"Experience the vibrant flavors of India and Southeast Asia. With aromatic spices and bold ingredients, the dishes here are a journey through rich culinary traditions."}/>                 
 
                     </div>
                 </div>

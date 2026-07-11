@@ -24,7 +24,7 @@ function PlanYourVisit() {
             </div>
 
             <div className='py-10 flex flex-col items-center'>
-                <h1 className='px-5 text-center text-4xl sm:text-6xl lg:text-8xl'>Check Out Museums</h1>
+                <h1 className='mb-16 px-5 text-center text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl'>Check Out Museums</h1>
 
                 <div className='flex w-full flex-col gap-8 p-5 lg:flex-row lg:justify-between lg:p-10'>
                     {/* Left side: MuseumInfoCard updates with selected museum */}

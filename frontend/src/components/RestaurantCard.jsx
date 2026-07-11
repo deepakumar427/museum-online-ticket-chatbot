@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MapPinCheck } from 'lucide-react';
 
-function RestaurantCard({ image, desc, time1, time2, location }) {
+function RestaurantCard({ image, name, desc, time1, time2, location }) {
   const [changecolor, setChangeColor] = useState(null);
 
   return (
@@ -26,24 +26,26 @@ function RestaurantCard({ image, desc, time1, time2, location }) {
         className='flex flex-col gap-5 pt-4 w-full transform transition-transform duration-300 ease-in-out'
         style={{ transform: changecolor ? 'translateX(10px)' : 'translateX(0)' }}
       >
-        <span className='description'>{desc}</span>
-        <span className='Timing'>
-          <span>
-            <p className='inline text-xl font-semibold pr-2'>Monday-Saturday:</p>
-            {time1}
-          </span>
-          <span className='block'>
-            <p className='inline font-semibold text-xl pr-2'>Sunday:</p>
-            {time2}
-          </span>
-        </span>
-        <span className='flex gap-2'>
+        <h3 className='mb-3 text-3xl font-bold text-gray-900'>{name}</h3>
+        <p className='mb-6 max-w-2xl leading-relaxed text-gray-600'>{desc}</p>
+        <div className='mb-6 flex flex-col gap-2'>
+          <div>
+            <span className='font-semibold text-gray-900'>Monday-Saturday:</span>{' '}
+            <span className='text-gray-600'>{time1}</span>
+          </div>
+          <div>
+            <span className='font-semibold text-gray-900'>Sunday:</span>{' '}
+            <span className='text-gray-600'>{time2}</span>
+          </div>
+        </div>
+        <span className='flex items-center gap-2 text-sm font-medium text-gray-500'>
           <MapPinCheck className='inline animate-pulse' />
           {location}
         </span>
 
-        <span>
-          Tixplore DiscountPoints : Accetped (member only)
+        <span className='flex items-center gap-2 text-sm font-medium text-gray-500'>
+          Tixplore DiscountPoints: Accepted
+          <span className='rounded-md bg-blue-50 px-2 py-1 text-xs font-bold uppercase tracking-wider text-blue-700'>Member only</span>
         </span>
       </div>
     </div>
