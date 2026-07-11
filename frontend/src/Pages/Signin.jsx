@@ -6,6 +6,7 @@ import Bottomwarning from "../components/Bottomwarning";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Assuming you are using react-router
 import { useToast } from "../hooks/use-toast";
+import { ArrowLeft } from "lucide-react";
 
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL ||
@@ -40,6 +41,14 @@ const Signin = () => {
 
   return (
     <div className="flex min-h-screen w-full items-center py-10 lg:h-screen lg:py-0">
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className="absolute left-6 top-6 flex cursor-pointer items-center gap-2 text-gray-500 transition-colors hover:text-gray-900"
+      >
+        <ArrowLeft size={18} />
+        Back
+      </button>
       <div className="flex w-full flex-col items-center gap-10 px-5 lg:h-full lg:flex-row lg:gap-0 lg:px-0">
         <div className="flex w-full flex-col items-center text-center lg:w-[40%] lg:text-left">
           <Heading label={"Sign In"}></Heading>
