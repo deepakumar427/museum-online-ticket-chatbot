@@ -5,19 +5,24 @@ const { randomUUID } = require('crypto');
 const router = express.Router();
 
 let sessionClient;
-try {
-  if (!process.env.DIALOGFLOW_PRIVATE_KEY || !process.env.DIALOGFLOW_CLIENT_EMAIL) {
-    throw new Error("Missing Dialogflow credentials in environment variables");
-  }
+const privateKey = process.env.DIALOGFLOW_PRIVATE_KEY;
+const clientEmail = process.env.DIALOGFLOW_CLIENT_EMAIL;
+
+if (!privateKey || !clientEmail) {
+  console.warn("Dialogflow keys missing");
+  sessionClient = null;
+} else {
+  try {
   sessionClient = new dialogflow.SessionsClient({
     credentials: {
-      client_email: process.env.DIALOGFLOW_CLIENT_EMAIL,
-      private_key: process.env.DIALOGFLOW_PRIVATE_KEY.replace(/\\n/g, '\n')
+      client_email: clientEmail,
+      private_key: privateKey.replace(/\\n/g, '\n')
     }
   });
-} catch (err) {
-  console.error("Failed to initialize Dialogflow client:", err.message);
-  sessionClient = null; // server keeps running, chatbot route degrades gracefully
+  } catch (err) {
+    console.error("Failed to initialize Dialogflow client:", err.message);
+    sessionClient = null; // server keeps running, chatbot route degrades gracefully
+  }
 }
 
 router.post('/message', async (req, res) => {

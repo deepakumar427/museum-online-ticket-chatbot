@@ -17,10 +17,10 @@ function ViewMuseumCard({ title, text,icon,iconColor ,optionalchildren,path,butt
             <h1 className='text-2xl sm:text-3xl lg:text-3xl'>{title}</h1>
 
             <div>
-                <p>
+                <div>
                     {text?text:''}
                     {optionalchildren?optionalchildren:''}
-                </p>
+                </div>
 
             </div>
             {buttonText && path &&
