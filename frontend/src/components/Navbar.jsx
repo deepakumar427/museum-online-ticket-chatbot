@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, User, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import HocConditionalRendering from "./HocConditionalRendering";
@@ -92,7 +92,9 @@ function Navbar() {
       ></div>
 
       <div className="relative flex h-full w-full items-center justify-between px-4 sm:px-8 lg:justify-around lg:px-0 z-10">
-        <p className="intro-title text-2xl sm:text-4xl lg:navbar-text">TIXPLORE.</p>
+        <Link to="/" className="cursor-pointer">
+          <p className="intro-title text-2xl sm:text-4xl lg:navbar-text">TIXPLORE.</p>
+        </Link>
 
         <div className="hidden lg:w-[30%] lg:block">
           <ul className="nav-links hidden md:flex gap-5 w-full">
