@@ -9,7 +9,7 @@ function ViewMuseumCard({ title, text,icon,iconColor ,optionalchildren,path,butt
         <div
         onMouseEnter={()=>setIconColor(iconColor)}
         onMouseLeave={()=>setIconColor(null)}
-         className='relative flex min-h-80 flex-col items-center gap-5 rounded-xl p-6 pt-16 text-center shadow-custom transition-all hover:shadow-hoveredCustomShadow hover:scale-[1.03] lg:min-h-0 lg:rounded-md lg:pt-20 lg:hover:scale-110'>
+         className='relative flex h-full flex-col items-center gap-5 rounded-xl p-6 pb-8 pt-16 text-center shadow-custom transition-all hover:shadow-hoveredCustomShadow hover:scale-[1.03] lg:rounded-md lg:pt-20 lg:hover:scale-110'>
             <div className="absolute  rounded-full p-5 -top-10  " style={{backgroundColor:iconColor?IconColor:"transparent",color:IconColor?"white":"black"}}>
                 {icon}
             </div>

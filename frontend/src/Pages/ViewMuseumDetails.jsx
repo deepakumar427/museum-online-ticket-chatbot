@@ -33,7 +33,7 @@ function ViewMuseumDetails() {
             <section className='mt-16'>
                 <div className='my-5 flex w-full flex-col items-center px-5 sm:px-10 lg:min-h-[800px] lg:px-16'>
                     <h1 className='text-center text-4xl sm:text-6xl lg:text-8xl'>Visiting Information</h1>
-                    <div className='grid w-full grid-cols-1 gap-16 pt-20 text-center lg:h-[400px] lg:w-[80%] lg:grid-cols-3 lg:gap-8 lg:pt-28'>
+                    <div className='grid w-full grid-cols-1 items-stretch gap-16 pt-20 text-center lg:w-[80%] lg:grid-cols-3 lg:gap-8 lg:pt-28'>
                         <ViewMuseumCard title={"Purchase Ticket"}
                             icon={<Ticket className='size-16 ' />}
                             iconColor={"#318CE7"}
